@@ -1,0 +1,4 @@
+wmi
+pypiwin32
+getmac
+requests
