@@ -20,12 +20,20 @@ Obtain a copy of `vars.ps1` and run it your Powershell environment.
 
 You'll want to setup a virtualenv - from PowerShell run
 
-    python -m venv env
+    python -m venv winzog_env
 
 And to _activate_ that virtualenv
 
-     .\venv\Scripts\Activate.ps1
+     .\winzog_env\Scripts\Activate.ps1
 
-now you can install some python requirements
+At which point - your Windows system will complain that running scripts is disabled. And will show lots of scary red text. The context and instructions to fix this can be found [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-6)
+
+But - the quick fix is to run:
+    
+    Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+    
+from an administrator Powershell window.
+
+**now** you can install some python requirements
 
     pip install -r requirements.txt
