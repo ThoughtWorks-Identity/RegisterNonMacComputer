@@ -14,6 +14,10 @@ All of a sudden I can see why Devs love Mac and Linux... :)
 
 ### Getting started...
 
+For this early iteration - we've added a powershell script `vars.ps1` to create the environment variables required... which should help when we move this basic code to CI/CD.
+
+Obtain a copy of `vars.ps1` and run it your Powershell environment.
+
 You'll want to setup a virtualenv - from PowerShell run
 
     python -m venv env
