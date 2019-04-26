@@ -10,19 +10,23 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '3.x'
 
-- task: CmdLine@2
+- task: Bash@3
   inputs:
-    script: 'pip install -r requirements.txt'
-  displayName: 'install our project requirements'
+    targetType: 'inline'
+    script: 'python -m pip install --upgrade pip
+pip install -r requirements.txt'
+  displayName: "install required packages"
 
 - task: CmdLine@2
   inputs:
     script: 'python.exe winzog.py'
   displayName: 'test run Winzog?'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'python.exe winzog.py'
