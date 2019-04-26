@@ -21,3 +21,8 @@ steps:
   inputs:
     script: 'pip install -r requirements.txt'
   displayName: 'install our project requirements'
+
+- task: CmdLine@2
+  inputs:
+    script: 'python.exe winzog.py'
+  displayName: 'test run Winzog?'
