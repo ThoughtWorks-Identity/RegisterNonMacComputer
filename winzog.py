@@ -5,6 +5,7 @@ import getmac
 import requests
 import webbrowser
 import os
+from urllib.parse import quote
 
 base_url = os.environ.get('Winzog_URL')
 
@@ -18,6 +19,9 @@ for config in wmi.WMI().Win32_ComputerSystemProduct():
         model = config.Vendor + " " + config.Name
     except:
         print("Something went wrong!")
+
+for k,v in data:
+    data[k] = quote(v)
 
 mac = getmac.get_mac_address()
 
