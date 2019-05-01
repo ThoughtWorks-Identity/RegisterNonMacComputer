@@ -6,10 +6,24 @@ import requests
 import webbrowser
 import os
 from urllib.parse import quote
+import sys
 
-base_url = os.environ.get('Winzog_URL')
+# This should suffice for now. When we have more variables consider using the
+# ConfigParser module
+def getBaseUrl():
+    if getattr(sys, 'frozen', False):
+        bundle_dir = sys._MEIPASS
+    else:
+        # we are running in a normal Python environment
+        bundle_dir = os.path.dirname(os.path.abspath(__file__))
 
-print(base_url)
+    with open(bundle_dir+'/registrationWebAppUrl.txt', 'r') as registrationWebAppUrlFile:
+        base_url = registrationWebAppUrlFile.read()
+
+    print(base_url)
+    return base_url
+    
+base_url = getBaseUrl()
 
 for config in wmi.WMI().Win32_ComputerSystemProduct():
     data = {'serial_number': config.IdentifyingNumber, 'laptop_vendor': config.Vendor, 'laptop_type': config.Name}

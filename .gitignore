@@ -1,3 +1,7 @@
 venv/
 .vscode
 vars.ps1
+build/
+dist/
+__pycache__/
+*.spec
