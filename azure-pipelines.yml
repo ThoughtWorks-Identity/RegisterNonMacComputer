@@ -22,10 +22,26 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'python.exe winzog.py'
+    script: 'python.exe src/winzog.py'
   displayName: 'test run Winzog?'
 
-- task: PowerShell@2
+- task: CmdLine@2
   inputs:
-    targetType: 'inline'
-    script: 'python.exe winzog.py'
+    script: './makeInstaller http://devurl/'
+  displayName: 'build dev package'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: './dist/winzog.exe'
+    artifactName: DevPackage
+
+- task: CmdLine@2
+  inputs:
+    script: './makeInstaller http://produrl/'
+  displayName: 'build production package'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: './dist/winzog.exe'
+    artifactName: ProdPackage
+
