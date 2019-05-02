@@ -29,8 +29,8 @@ config = wmi.WMI().Win32_ComputerSystemProduct()[0]
 data = {
     'serial': config.IdentifyingNumber,
     'windows': "true",
-    'laptop_vendor': config.Vendor,
-    'laptop_type': config.Name,
+    'manufacturer':config.Vendor, 
+    'model': config.Name,
     'macAddress': getmac.get_mac_address()
 }
 
