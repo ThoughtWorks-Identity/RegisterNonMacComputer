@@ -27,10 +27,11 @@ base_url = getBaseUrl()
 config = wmi.WMI().Win32_ComputerSystemProduct()[0]
 
 data = {
-    'serial_number': config.IdentifyingNumber,
+    'serial': config.IdentifyingNumber,
+    'windows': "true",
     'laptop_vendor': config.Vendor,
     'laptop_type': config.Name,
-    'mac': getmac.get_mac_address()
+    'macAddress': getmac.get_mac_address()
 }
 
 print(data)
