@@ -34,7 +34,7 @@ for config in wmi.WMI().Win32_ComputerSystemProduct():
     except:
         print("Something went wrong!")
 
-for k,v in data:
+for k,v in data.items():
     data[k] = quote(v)
 
 mac = getmac.get_mac_address()
