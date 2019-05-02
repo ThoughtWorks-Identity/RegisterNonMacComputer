@@ -27,7 +27,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: './makeInstaller http://devurl/'
+    script: './makeInstaller $(Winzog_dev_URL)'
   displayName: 'build dev package'
 
 - task: PublishBuildArtifacts@1
@@ -37,11 +37,13 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: './makeInstaller http://produrl/'
+    script: './makeInstaller $(Winzog_prod_URL)'
   displayName: 'build production package'
 
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: './dist/winzog.exe'
     artifactName: ProdPackage
+
+
 
