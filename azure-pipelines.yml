@@ -30,6 +30,14 @@ steps:
     script: './makeInstaller $(Winzog_dev_URL)'
   displayName: 'build dev package'
 
+- task: codesigning@2
+  inputs:
+    secureFileId: 'cd0957cd-2698-4940-a617-3b8f0b3cf326'
+    signCertPassword: '$(cert_password)'
+    files: '**/*.exe'
+    timeServer: 'http://timestamp.digicert.com'
+    hashingAlgorithm: 'SHA256'
+
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: './dist/winzog.exe'
