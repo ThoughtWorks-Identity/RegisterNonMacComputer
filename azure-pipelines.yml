@@ -33,7 +33,7 @@ steps:
 - task: codesigning@2
   inputs:
     secureFileId: 'windows_distribution_signing_key.p12'
-    signCertPassword: '${windows_signing_certificate_password}'
+    signCertPassword: '$(windows_signing_certificate_password)'
     files: '**/*.exe'
     timeServer: 'http://timestamp.digicert.com'
     hashingAlgorithm: 'SHA256'
@@ -52,7 +52,7 @@ steps:
 - task: codesigning@2
   inputs:
     secureFileId: 'windows_distribution_signing_key.p12'
-    signCertPassword: '${windows_signing_certificate_password}'
+    signCertPassword: '$(windows_signing_certificate_password)'
     files: '**/*.exe'
     timeServer: 'http://timestamp.digicert.com'
     hashingAlgorithm: 'SHA256'
