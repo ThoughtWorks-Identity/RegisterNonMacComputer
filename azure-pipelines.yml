@@ -32,11 +32,12 @@ steps:
 
 - task: codesigning@2
   inputs:
-    secureFileId: 'cd0957cd-2698-4940-a617-3b8f0b3cf326'
-    signCertPassword: '$(cert_password)'
+    secureFileId: 'windows_distribution_signing_key.p12'
+    signCertPassword: '${windows_signing_certificate_password}'
     files: '**/*.exe'
     timeServer: 'http://timestamp.digicert.com'
     hashingAlgorithm: 'SHA256'
+  displayName: 'sign dev package'  
 
 - task: PublishBuildArtifacts@1
   inputs:
@@ -47,6 +48,16 @@ steps:
   inputs:
     script: './makeInstaller $(Winzog_prod_URL)'
   displayName: 'build production package'
+
+- task: codesigning@2
+  inputs:
+    secureFileId: 'windows_distribution_signing_key.p12'
+    signCertPassword: '${windows_signing_certificate_password}'
+    files: '**/*.exe'
+    timeServer: 'http://timestamp.digicert.com'
+    hashingAlgorithm: 'SHA256'
+  displayName: 'sign prod package'  
+
 
 - task: PublishBuildArtifacts@1
   inputs:
