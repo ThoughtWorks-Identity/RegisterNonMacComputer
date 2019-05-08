@@ -28,13 +28,13 @@ config = wmi.WMI().Win32_ComputerSystemProduct()[0]
 
 data = {
     'serial': config.IdentifyingNumber,
-    'windows': "true",
-    'manufacturer':config.Vendor, 
+    'non_mac': "true",
+    'manufacturer': config.Vendor,
     'model': config.Name,
-    'macAddress': getmac.get_mac_address()
+    'wifi_mac': getmac.get_mac_address()
 }
 
-print(data)
+print('The data that will be sent = ', data)
 
 winzog_url = base_url + urllib.parse.urlencode(data)
 
