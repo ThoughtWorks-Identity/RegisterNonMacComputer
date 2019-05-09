@@ -22,11 +22,6 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'python.exe src/winzog.py'
-  displayName: 'test run Winzog?'
-
-- task: CmdLine@2
-  inputs:
     script: './makeInstaller $(Winzog_dev_URL) $(sumologic_dev_url)'
   displayName: 'build dev package'
 
