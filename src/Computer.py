@@ -4,7 +4,7 @@ import getmac
 from pathlib import Path
 import platform
 import re
-from subprocess import check_output, CalledProcessError
+from subprocess import check_output, CalledProcessError, DEVNULL
 
 
 def is_service_running(sc_query_output):
@@ -13,7 +13,7 @@ def is_service_running(sc_query_output):
 
 def check_service(query):
     try:
-        sc_query_output = check_output(query).decode('utf-8')
+        sc_query_output = check_output(query, stdin=DEVNULL).decode('utf-8')
         return {
             "is_installed": "true",
             "is_running": "true" if is_service_running(sc_query_output) else "false"

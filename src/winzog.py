@@ -21,7 +21,7 @@ class Winzog:
             self.logger.debug('Getting computer data')
             data = Computer.get_data()
             sumologic.log(data)
-            open_browser_for_registration(self.configuration_properties, data['device_data'])
+            self.open_browser_for_registration(data['device_data'])
         except:
             error_string = traceback.format_exc()
             sumologic.log({'error': error_string})
