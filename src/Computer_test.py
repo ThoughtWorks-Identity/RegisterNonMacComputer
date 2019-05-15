@@ -18,7 +18,7 @@ class ComputerTest(TestCase):
 
     @patch('Computer.check_output')
     def test_sophos_service_is_installed(self, mock_check_output):
-        sc_query_output='''
+        sc_query_output=b'''
         SERVICE_NAME: SAVService
         TYPE               : 10  WIN32_OWN_PROCESS
         STATE              : 4  RUNNING
@@ -40,7 +40,7 @@ class ComputerTest(TestCase):
    
     @patch('Computer.check_output')
     def test_sophos_service_is_installed_but_not_running(self, mock_check_output):
-        sc_query_output='''
+        sc_query_output=b'''
         SERVICE_NAME: SAVService
         TYPE               : 10  WIN32_OWN_PROCESS
         STATE              : 1  STOPPED
