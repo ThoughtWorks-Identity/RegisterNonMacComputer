@@ -2,7 +2,7 @@ if [%1]==[] goto usage
 if [%2]==[] goto usage
 echo registration_url=%~1 > configuration.properties
 echo sumo_logic_url=%~2 >> configuration.properties
-pyinstaller --onefile --noconsole --icon "mdm_icon.ico" --add-data "configuration.properties;." src\winzog.py
+pyinstaller --onefile --noconsole --icon "mdm_icon.ico" --add-data "configuration.properties;." src\Winzog.py
 goto :eof
 
 :usage

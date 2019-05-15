@@ -22,6 +22,11 @@ steps:
 
 - task: CmdLine@2
   inputs:
+    script: 'python -m unittest discover src -p "*_test.py"'
+  displayName: 'Unit Test'
+
+- task: CmdLine@2
+  inputs:
     script: './makeInstaller "$(Winzog_dev_URL)" "$(sumologic_dev_url)"'
   displayName: 'build dev package'
 
