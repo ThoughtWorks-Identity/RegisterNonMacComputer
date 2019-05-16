@@ -85,7 +85,7 @@ jobs:
 
       - task: PublishBuildArtifacts@1
         inputs:
-          pathtoPublish: './dist/RegisterWindowsComputer'
+          pathtoPublish: './dist/RegisterLinuxComputer'
           artifactName: DevLinuxPackage
 
       - task: CmdLine@2
@@ -95,7 +95,7 @@ jobs:
 
       - task: PublishBuildArtifacts@1
         inputs:
-          pathtoPublish: './dist/RegisterWindowsComputer'
+          pathtoPublish: './dist/RegisterLinuxComputer'
           artifactName: ProdLinuxPackage
 
 
