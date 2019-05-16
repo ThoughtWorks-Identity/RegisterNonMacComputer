@@ -6,58 +6,95 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-2019'
+jobs:
+  - job: Windows
+    pool:
+      vmImage: 'windows-2019'
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'python -m pip install --upgrade pip && pip install -r requirements.txt'
-  displayName: "install required packages"
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'python -m pip install --upgrade pip && pip install -r requirements-windows.txt'
+      displayName: "install required packages"
 
-- task: CmdLine@2
-  inputs:
-    script: './makeInstaller "$(Winzog_dev_URL)" "$(sumologic_dev_url)"'
-  displayName: 'build dev package'
+    - task: CmdLine@2
+      inputs:
+        script: './makeInstaller.bat "$(Winzog_dev_URL)" "$(sumologic_dev_url)"'
+      displayName: 'build dev package'
 
-- task: codesigning@2
-  inputs:
-    secureFileId: 'windows_distribution_signing_key.p12'
-    signCertPassword: '$(windows_signing_certificate_password)'
-    files: '**/*.exe'
-    timeServer: 'http://timestamp.digicert.com'
-    hashingAlgorithm: 'SHA256'
-  displayName: 'sign dev package'  
+    - task: codesigning@2
+      inputs:
+        secureFileId: 'windows_distribution_signing_key.p12'
+        signCertPassword: '$(windows_signing_certificate_password)'
+        files: '**/*.exe'
+        timeServer: 'http://timestamp.digicert.com'
+        hashingAlgorithm: 'SHA256'
+      displayName: 'sign dev package'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: './dist/winzog.exe'
-    artifactName: DevPackage
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: './dist/RegisterWindowsComputer.exe'
+        artifactName: DevWindowsPackage
 
-- task: CmdLine@2
-  inputs:
-    script: './makeInstaller "$(Winzog_prod_URL)" "$(sumologic_prod_url)"'
-  displayName: 'build production package'
+    - task: CmdLine@2
+      inputs:
+        script: './makeInstaller.bat "$(Winzog_prod_URL)" "$(sumologic_prod_url)"'
+      displayName: 'build production package'
 
-- task: codesigning@2
-  inputs:
-    secureFileId: 'windows_distribution_signing_key.p12'
-    signCertPassword: '$(windows_signing_certificate_password)'
-    files: '**/*.exe'
-    timeServer: 'http://timestamp.digicert.com'
-    hashingAlgorithm: 'SHA256'
-  displayName: 'sign prod package'  
+    - task: codesigning@2
+      inputs:
+        secureFileId: 'windows_distribution_signing_key.p12'
+        signCertPassword: '$(windows_signing_certificate_password)'
+        files: '**/*.exe'
+        timeServer: 'http://timestamp.digicert.com'
+        hashingAlgorithm: 'SHA256'
+      displayName: 'sign prod package'
 
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: './dist/winzog.exe'
-    artifactName: ProdPackage
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: './dist/RegisterWindowsComputer.exe'
+        artifactName: ProdWindowsPackage
+
+  - job: Linux
+      pool:
+        vmImage: 'ubuntu-16.04'
+
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.x'
+
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: 'python -m pip install --upgrade pip && pip install -r requirements-linux.txt'
+          displayName: "install required packages"
+
+        - task: CmdLine@2
+          inputs:
+            script: 'sh ./makeInstaller.sh "$(Winzog_dev_URL)" "$(sumologic_dev_url)"'
+          displayName: 'build dev package'
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathtoPublish: './dist/RegisterWindowsComputer'
+            artifactName: DevLinuxPackage
+
+        - task: CmdLine@2
+          inputs:
+            script: './makeInstaller.sh "$(Winzog_prod_URL)" "$(sumologic_prod_url)"'
+          displayName: 'build production package'
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathtoPublish: './dist/RegisterWindowsComputer'
+            artifactName: ProdLinuxPackage
 
 
 
