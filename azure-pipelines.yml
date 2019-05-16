@@ -90,7 +90,7 @@ jobs:
 
       - task: CmdLine@2
         inputs:
-          script: './makeInstaller.sh "$(Winzog_prod_URL)" "$(sumologic_prod_url)"'
+          script: 'sh ./makeInstaller.sh "$(Winzog_prod_URL)" "$(sumologic_prod_url)"'
         displayName: 'build production package'
 
       - task: PublishBuildArtifacts@1
