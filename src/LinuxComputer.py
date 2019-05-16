@@ -4,8 +4,8 @@ import platform
 
 
 def get_from_dmidecode(key):
-    command = ['dmidecode', '-s', key]
-    return subprocess.check_output(command)
+    command = ['sudo','dmidecode', '-s', key]
+    return subprocess.check_output(command).decode('UTF-8')
 
 def get_device_data():
      return {

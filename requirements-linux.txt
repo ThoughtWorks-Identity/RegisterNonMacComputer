@@ -1,0 +1,4 @@
+getmac
+requests
+pyinstaller
+jproperties
