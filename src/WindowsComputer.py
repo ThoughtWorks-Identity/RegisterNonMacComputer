@@ -43,10 +43,9 @@ def get_bit_locker_status():
 
 
 def get_data():
-
     return {
         "device_data": get_device_data(),
         "sophos": get_sophos_status(),
         "bitlocker": get_bit_locker_status(),
-        "windows_version": get_windows_os_version(),
+        "os_version": get_windows_os_version(),
     }

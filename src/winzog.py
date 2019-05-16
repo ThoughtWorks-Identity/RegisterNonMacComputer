@@ -3,23 +3,28 @@ import sys
 import traceback
 import urllib.parse
 import webbrowser
-
 from jproperties import Properties
-
-import Computer
 from Sumologic import Sumologic
 from configure_logger import configure_logger
+import platform
+
+if "win" in platform.platform().lower():
+    import WindowsComputer as computer
+else:
+    import LinuxComputer as computer    
 
 
 class Winzog: 
 
-    def main(self):
+    def __init__(self):
         self.logger = configure_logger()
         self.configuration_properties = self.load_configuration_properties()
+
+    def main(self):
         sumologic = Sumologic(self.configuration_properties)
         try:
             self.logger.debug('Getting computer data')
-            data = Computer.get_data()
+            data = computer.get_data()
             sumologic.log(data)
             self.open_browser_for_registration(data['device_data'])
         except:
