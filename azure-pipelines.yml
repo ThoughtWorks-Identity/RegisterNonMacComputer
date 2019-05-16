@@ -38,7 +38,7 @@ jobs:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathtoPublish: './dist/Winzog.exe'
+        pathtoPublish: './dist/RegisterYourComputer.exe'
         artifactName: DevWindowsPackage
 
     - task: CmdLine@2
@@ -58,7 +58,7 @@ jobs:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathtoPublish: './dist/Winzog.exe'
+        pathtoPublish: './dist/RegisterYourComputer.exe'
         artifactName: ProdWindowsPackage
 
   - job: Linux
@@ -73,7 +73,7 @@ jobs:
       - task: Bash@3
         inputs:
           targetType: 'inline'
-          script: 'python3 -m pip install --upgrade pip3 && pip3 install -r requirements-linux.txt'
+          script: 'python3 -m pip install --upgrade pip && pip install -r requirements-linux.txt'
         displayName: "install required packages"
 
       - task: CmdLine@2
