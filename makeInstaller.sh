@@ -13,5 +13,5 @@ python3 --version
 echo "showing path"
 echo $PATH
 echo "showing us local bin"
-ls /usr/local/bin
+echo $(ls /usr/local/bin)
 pyinstaller --onefile --paths="src" --hidden-import "src/LinuxComputer" --add-data "configuration.properties:." -n RegisterLinuxComputer src/RegisterYourComputer.py
