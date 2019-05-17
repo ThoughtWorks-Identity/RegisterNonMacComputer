@@ -18,4 +18,4 @@ python3 -m venv .venv
 chmod +x ./.venv/bin/activate
 ./.venv/bin/activate
 pip3 install -r requirements-linux.txt
-pyinstaller --onefile --paths="src" --hidden-import "src/LinuxComputer" --add-data "configuration.properties:." -n RegisterLinuxComputer src/RegisterYourComputer.py
+/usr/local/bin/pyinstaller --onefile --paths="src" --hidden-import "src/LinuxComputer" --add-data "configuration.properties:." -n RegisterLinuxComputer src/RegisterYourComputer.py
