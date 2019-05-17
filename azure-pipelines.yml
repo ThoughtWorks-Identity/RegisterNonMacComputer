@@ -71,15 +71,10 @@ jobs:
       - task: Bash@3
         inputs:
           targetType: 'inline'
-          script: pip3 install -r requirements-linux.txt
-        displayName: "install requirements"
-
-      - task: Bash@3
-        inputs:
-          targetType: 'filepath'
-          filePath: './makeInstaller.sh'
-          arguments: '"$(Winzog_dev_URL)" "$(sumologic_dev_url)"'
-        displayName: 'build dev package'
+          script: |
+            pip3 install -r requirements-linux.txt
+            sh ./makeInstaller.sh "$(Winzog_dev_URL)" "$(sumologic_dev_url)"
+        displayName: "build dev package"
 
       - task: PublishBuildArtifacts@1
         inputs:
@@ -88,10 +83,11 @@ jobs:
 
       - task: Bash@3
         inputs:
-          targetType: 'filepath'
-          filePath: './makeInstaller.sh'
-          arguments: '"$(Winzog_prod_URL)" "$(sumologic_prod_url)"'
-        displayName: 'build prod package'
+          targetType: 'inline'
+          script: |
+            pip3 install -r requirements-linux.txt
+            sh ./makeInstaller.sh "$(Winzog_prod_URL)" "$(sumologic_prod_url)"
+        displayName: "build prod package"
 
       - task: PublishBuildArtifacts@1
         inputs:
