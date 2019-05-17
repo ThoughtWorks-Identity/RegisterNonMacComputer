@@ -7,4 +7,4 @@ sumo_url_cleaned="${sumo_url%\"}"
 sumo_url_cleaned="${sumo_url_cleaned#\"}"
 echo registration_url=${reg_url_cleaned} > configuration.properties
 echo sumo_logic_url=${sumo_url_cleaned} >> configuration.properties
-pyinstaller --onefile --add-data "configuration.properties:." -n RegisterLinuxComputer src/RegisterYourComputer.py
+pyinstaller --onefile --paths="src" --hidden-import "src/LinuxComputer" --add-data "configuration.properties:." -n RegisterLinuxComputer src/RegisterYourComputer.py
