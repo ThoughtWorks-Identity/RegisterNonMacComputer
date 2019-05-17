@@ -15,6 +15,7 @@ echo $PATH
 echo "showing usr local bin"
 echo $(ls /usr/local/bin)
 python3 -m venv .venv
-source ./.venv/bin/activate
+chmod +x ./.venv/bin/activate
+./.venv/bin/activate
 pip3 install -r requirements-linux.txt
 pyinstaller --onefile --paths="src" --hidden-import "src/LinuxComputer" --add-data "configuration.properties:." -n RegisterLinuxComputer src/RegisterYourComputer.py
