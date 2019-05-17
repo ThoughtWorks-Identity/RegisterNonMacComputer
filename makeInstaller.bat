@@ -2,7 +2,7 @@ if [%1]==[] goto usage
 if [%2]==[] goto usage
 echo registration_url=%~1 > configuration.properties
 echo sumo_logic_url=%~2 >> configuration.properties
-pyinstaller --paths="src" --hidden-import "src/WindowsComputer" --icon "mdm_icon.ico" --add-data "configuration.properties;." src\RegisterYourComputer.py
+pyinstaller --onefile --paths="src" --hidden-import "src/WindowsComputer" --icon "mdm_icon.ico" --add-data "configuration.properties;." src\RegisterYourComputer.py
 goto :eof
 
 :usage
