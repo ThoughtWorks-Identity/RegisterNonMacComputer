@@ -1,7 +1,10 @@
 import wmi
 import getmac
 import platform
+import subprocess
+import logging
 
+logger = logging.getLogger('Winzog.WindowsComputer')
 
 def check_service(service_name):
     c = wmi.WMI()
@@ -26,14 +29,25 @@ def get_sophos_status():
 def get_windows_os_version():
     return platform.platform()
 
+def get_from_wmic(key, from_where):
+    command = ['wmic',from_where, 'get', key]
+    output = subprocess.check_output(command).decode('UTF-8')
+    logger.debug('==================>')
+    logger.debug(output)
+    logger.debug('==================>')
+    lines = output.splitlines()
+    logger.debug(lines)
+    if(len(lines) >= 2):
+        return lines[2].strip()
+    
+    raise RuntimeError("Unable to get wmic {} get {} - got output {}".format(from_where, key, output))
 
 def get_device_data():
-    config = wmi.WMI().Win32_ComputerSystemProduct()[0]
     return {
-        'serial': config.IdentifyingNumber,
+        'serial': get_from_wmic('serialnumber', 'bios'),
         'non_mac': "true",
-        'manufacturer': config.Vendor,
-        'model': config.Name,
+        'manufacturer': get_from_wmic('manufacturer', 'computersystem'),
+        'model': get_from_wmic('model', 'computersystem'),
         'wifi_mac': getmac.get_mac_address()
     }
 

@@ -13,7 +13,7 @@ def get_device_data():
         'serial': get_from_dmidecode('system-serial-number'),
         'non_mac': "true",
         'manufacturer': get_from_dmidecode('system-manufacturer'),
-        'model': get_from_dmidecode('system-product-name'),
+        'model': get_from_dmidecode('system-version'),
         'wifi_mac': getmac.get_mac_address()
     }
 
