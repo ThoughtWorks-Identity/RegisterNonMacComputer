@@ -11,3 +11,4 @@ configuration.properties
 .idea/
 *.iml
 .idea/
+dockerCp.sh
