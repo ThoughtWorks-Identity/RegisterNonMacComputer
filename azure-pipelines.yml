@@ -65,7 +65,7 @@ jobs:
     pool:
       vmImage: 'ubuntu-16.04'
 
-    container: regsethu/linux-ubuntu-python3:14.04_0.0.2
+    container: regsethu/linux-ubuntu-python3:14.04_0.0.3
 
     steps:
       - task: Bash@3

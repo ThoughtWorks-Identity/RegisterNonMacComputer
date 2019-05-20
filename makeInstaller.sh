@@ -10,10 +10,6 @@ echo registration_url=${reg_url_cleaned} > configuration.properties
 echo sumo_logic_url=${sumo_url_cleaned} >> configuration.properties
 echo "version of python"
 python3 --version
-echo "showing path"
-echo $PATH
-echo "showing usr local bin"
-echo $(ls /usr/local/bin)
 python3 -m venv .venv
 chmod +x ./.venv/bin/activate
 ./.venv/bin/activate
