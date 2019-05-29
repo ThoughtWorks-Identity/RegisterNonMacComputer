@@ -51,3 +51,4 @@ Run the makeInstaller.bat on Windows. The exe is signed with sign tool with a ce
 All of this is running on a pipeline on Azure. 
  
  
+Released under the Apache 2 License  
