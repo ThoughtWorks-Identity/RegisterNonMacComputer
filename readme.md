@@ -1,39 +1,53 @@
-Winzog
+RegisterNonMacComputer
 ---
 
-This is a first stab at client code for Windows - to send information to ServiceNow as part of a laptop registration flow.
+Has code that will go to either wmic on a windows computer or dmidecode for a linux computer
+and get the below information about the laptop:
+* Serial Number
+* Mac Address
+* Model
+* Manufacturer
+
+It will then open up the browser pointing to a registration web app. 
+The above info is added as query parameters to the URL. 
+
+The code also logs the above info to any log URL provided.   
 
 This is written in Python 3. You will need to install
 
 * [Python 3](https://www.python.org/downloads/windows/)
-* [Git for Windows](https://git-scm.com/download/win)
 
-And actually work out how to get these things to play nicely together.
 
-All of a sudden I can see why Devs love Mac and Linux... :)
+For Linux there's a separate requirements file - requirements-linux.txt  
+For Window there's a separate requirements file - requirements-windows.txt
 
-### Getting started...
+The code makes use of pyinstaller to package up everything into a binary. 
 
-For this early iteration - we've added a powershell script `vars.ps1` to create the environment variables required... which should help when we move this basic code to CI/CD.
+## Notes:  
+The Linux binary needs to sudo privileges to call dmidecode. The binary is meant 
+to be executed on the terminal. So you go:
 
-Obtain a copy of `vars.ps1` and run it your Powershell environment.
+```bash
+chmod +x ./RegisterLinuxComputer
+./RegisterLinuxComputer
+<you will now be prompted for your credentials>
+``` 
 
-You'll want to setup a virtualenv - from PowerShell run
+For Windows, you get an exe that you double click to run.
 
-    python -m venv winzog_env
+You need to run pyinstaller on the respective OS to get the binary.   
 
-And to _activate_ that virtualenv
+For Linux,   
+there's a docker file which is used for building - LinuxBuildDockerfile. Create an image with 
+the Dockerfile and then run ./makeInstaller.sh. Else use the docker image I built for this - 
+regsethu/linux-ubuntu-python3:14.04_0.0.4  
+You need to build this in the lowest possible Ubuntu version out there for it to work on all
+versions of Ubuntu / Debian from 14.04 onwards.
 
-     .\winzog_env\Scripts\Activate.ps1
+For Windows,  
+Run the makeInstaller.bat on Windows. The exe is signed with sign tool with a certificate. 
 
-At which point - your Windows system will complain that running scripts is disabled. And will show lots of scary red text. The context and instructions to fix this can be found [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-6)
 
-But - the quick fix is to run:
-    
-    Set-ExecutionPolicy -ExecutionPolicy Unrestricted
-    
-from an administrator Powershell window.
-
-**now** you can install some python requirements
-
-    pip install -r requirements.txt
+All of this is running on a pipeline on Azure. 
+ 
+ 
