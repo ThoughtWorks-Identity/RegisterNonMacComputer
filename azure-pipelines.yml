@@ -92,5 +92,11 @@ jobs:
           pathtoPublish: './dist/RegisterLinuxComputer'
           artifactName: ProdLinuxPackage
 
+      - task: PublishPipelineArtifact@0
+        displayName: 'Publish NoNMac laptop registration package deploy script'
+        inputs:
+          artifactName: NON_MAC_LAPREGPKG_DEPLOY_SCRIPT
+          targetPath: './buildAndDeploy/deploy.sh'
+
 
 
