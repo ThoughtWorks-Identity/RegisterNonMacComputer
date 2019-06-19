@@ -6,12 +6,13 @@ reg_url_cleaned="${reg_url_cleaned#\"}"
 sumo_url=$2
 sumo_url_cleaned="${sumo_url%\"}"
 sumo_url_cleaned="${sumo_url_cleaned#\"}"
-echo registration_url=${reg_url_cleaned} > configuration.properties
-echo sumo_logic_url=${sumo_url_cleaned} >> configuration.properties
-echo "version of python"
-python3 --version
-python3 -m venv .venv
-chmod +x ./.venv/bin/activate
-./.venv/bin/activate
-pip3 install -r requirements-linux.txt
-/usr/local/bin/pyinstaller --onefile --paths="src" --hidden-import "src/LinuxComputer" --add-data "configuration.properties:." -n RegisterLinuxComputer src/RegisterYourComputer.py
+commitId=$3
+commitId_cleaned="${commitId%\"}"
+commitId_cleaned="${commitId_cleaned#\"}"
+env=$4
+
+cp linuxScript.template.sh RegisterYourComputer-${env}.sh
+sed -i "s,#commitId#,${commitId},g" RegisterYourComputer-${env}.sh
+sed -i "s,#registration_url#,${reg_url_cleaned},g" RegisterYourComputer-${env}.sh
+sed -i "s,#sumo_logic_url#,${sumo_url_cleaned},g" RegisterYourComputer-${env}.sh
+

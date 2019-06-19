@@ -12,3 +12,6 @@ configuration.properties
 *.iml
 .idea/
 dockerCp.sh
+linuxScript.sh
+linuxScript-dev.sh
+linuxScript-prod.sh

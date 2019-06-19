@@ -50,8 +50,8 @@ class Winzog:
     def open_browser_for_registration(self, data):
         registration_url, meta = self.configuration_properties['registration_url']
         winzog_url = "{}{}".format(registration_url.strip(), urllib.parse.urlencode(data).strip())
-
         self.logger.info(winzog_url)
+        print('\n\nIf you browser does not open, please open your browser and paste the below URL: \n {}'.format(winzog_url))
         webbrowser.open_new_tab(winzog_url)
     
 

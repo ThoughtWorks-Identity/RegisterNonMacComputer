@@ -65,31 +65,29 @@ jobs:
     pool:
       vmImage: 'ubuntu-16.04'
 
-    container: regsethu/linux-ubuntu-python3:14.04_0.0.4
-
     steps:
       - task: Bash@3
         inputs:
           targetType: 'inline'
           script: |
-            sh ./buildAndDeploy/makeInstaller.sh "$(Winzog_dev_URL)" "$(sumologic_dev_url)"
+            sh ./buildAndDeploy/makeInstaller.sh "$(Winzog_dev_URL)" "$(sumologic_dev_url)" "$(Build.SourceVersion)" dev
         displayName: "build dev package"
 
       - task: PublishBuildArtifacts@1
         inputs:
-          pathtoPublish: './dist/RegisterLinuxComputer'
+          pathtoPublish: 'RegisterYourComputer-dev.sh'
           artifactName: DevLinuxPackage
 
       - task: Bash@3
         inputs:
           targetType: 'inline'
           script: |
-            sh ./buildAndDeploy/makeInstaller.sh "$(Winzog_prod_URL)" "$(sumologic_prod_url)"
+            sh ./buildAndDeploy/makeInstaller.sh "$(Winzog_prod_URL)" "$(sumologic_prod_url)" "$(Build.SourceVersion)" prod
         displayName: "build prod package"
 
       - task: PublishBuildArtifacts@1
         inputs:
-          pathtoPublish: './dist/RegisterLinuxComputer'
+          pathtoPublish: 'RegisterYourComputer-prod.sh'
           artifactName: ProdLinuxPackage
 
       - task: PublishPipelineArtifact@0
