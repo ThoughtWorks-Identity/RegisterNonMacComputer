@@ -52,7 +52,8 @@ function executeProgram() {
 
 # Default Location of python3. Change here if its not the same on your machine!
 pythonLocation=/usr/bin/python3
-commitId=#commitId#
+fullCommitId=#commitId#
+commitId=${fullCommitId:0:7}
 registration_url="#registration_url#"
 sumo_logic_url="#sumo_logic_url#"
 cleanup
