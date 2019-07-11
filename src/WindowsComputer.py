@@ -42,12 +42,35 @@ def get_from_wmic(key, from_where):
     
     raise RuntimeError("Unable to get wmic {} get {} - got output {}".format(from_where, key, output))
 
-def get_device_data():
+
+def is_error(model):
+    return model is None or model.strip() == '' or model.strip().lower() == 'not specified'
+
+def get_model(sumologic, serial):
+    model = 'Not Specified'
+    #model = get_from_wmic('model', 'computersystem')
+    if is_error(model):
+        sumologic.log({'message': {
+            'type': 'warning', 
+            'text': 'Model for serial number {} from wmic computersystem get model returned "{}"'.format(serial, model)
+        }})
+        model = get_from_wmic('name', 'csproduct')
+        if is_error(model):
+            sumologic.log({'message': {
+                'type': 'error', 
+                'text': 'Model for serial number {} from wmic csproduct get name returned "{}".'.format(serial, model) \
+                    + 'Could not determine model of laptop'
+            }})
+    return model        
+        
+
+def get_device_data(sumologic):
+    serial = get_from_wmic('serialnumber', 'bios')
     return {
-        'serial': get_from_wmic('serialnumber', 'bios'),
+        'serial': serial,
         'non_mac': "true",
         'manufacturer': get_from_wmic('manufacturer', 'computersystem'),
-        'model': get_from_wmic('model', 'computersystem'),
+        'model': get_model(sumologic, serial),
         'wifi_mac': getmac.get_mac_address()
     }
 
@@ -56,9 +79,9 @@ def get_bit_locker_status():
     return check_service('BDESVC')
 
 
-def get_data():
+def get_data(sumologic):
     return {
-        "device_data": get_device_data(),
+        "device_data": get_device_data(sumologic),
         "sophos": get_sophos_status(),
         "bitlocker": get_bit_locker_status(),
         "os_version": get_windows_os_version(),

@@ -24,7 +24,7 @@ class Winzog:
         sumologic = Sumologic(self.configuration_properties)
         try:
             self.logger.debug('Getting computer data')
-            data = computer.get_data()
+            data = computer.get_data(sumologic)
             sumologic.log(data)
             self.open_browser_for_registration(data['device_data'])
         except:
