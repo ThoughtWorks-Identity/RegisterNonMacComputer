@@ -46,9 +46,9 @@ def get_from_wmic(key, from_where):
 def is_error(model):
     return model is None or model.strip() == '' or model.strip().lower() == 'not specified'
 
+
 def get_model(sumologic, serial):
-    model = 'Not Specified'
-    #model = get_from_wmic('model', 'computersystem')
+    model = get_from_wmic('model', 'computersystem')
     if is_error(model):
         sumologic.log({'message': {
             'type': 'warning', 
